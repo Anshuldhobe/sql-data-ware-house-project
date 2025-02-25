@@ -10,92 +10,179 @@ first we are performing truncate command on each table to empty the table and th
 Create or alter procedure bronze.load_bronze as
 
 begin
+declare @start_time date,@end_time date,  @batch_start_time date, @batch_end_time date;
 
-truncate table bronze.crm_cust_info
-bulk insert bronze.crm_cust_info
-from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.crm_cust_info.csv'
-with 
-(
+begin try 
 
-firstrow = 2,
-fieldterminator = ',',
-tablock
-);
+	print '==================================================';
+	print 'loading broze layer';
+	print '==================================================';
 
 
-select * from bronze.crm_cust_info
+	print '---------------------------------------------------';
+	print 'loading crm_cust_info table';
+	print '---------------------------------------------------';
+
+	set @batch_start_time = GETDATE();
+
+	set @start_time = GETDATE();
+
+		truncate table bronze.crm_cust_info
+		bulk insert bronze.crm_cust_info
+		from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.crm_cust_info.csv'
+		with 
+		(
+
+		firstrow = 2,
+		fieldterminator = ',',
+		tablock
+		);
+
+	set @end_time = GETDATE();
+
+	print'duration for loading crm_cust_info is' + Cast(datediff(second,@start_time,@end_time) as varchar);
+	print '>>--------';
 
 
-
-truncate table bronze.crm_prd_info
-
-bulk insert bronze.crm_prd_info
-from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.crm_prd_info.csv'
-with 
-(
-
-firstrow = 2,
-fieldterminator = ',',
-tablock
-);
+	print '---------------------------------------------------';
+	print 'loading crm_prd_info table';
+	print '---------------------------------------------------';
 
 
+	set @start_time = GETDATE();
 
 
-truncate table bronze.crm_sales_details
+		truncate table bronze.crm_prd_info
 
-bulk insert bronze.crm_sales_details
-from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.crm_sales_details.csv'
-with 
-(
+		bulk insert bronze.crm_prd_info
+		from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.crm_prd_info.csv'
+		with 
+		(
 
-firstrow = 2,
-fieldterminator = ',',
-tablock
-);
+		firstrow = 2,
+		fieldterminator = ',',
+		tablock
+		);
+	set @end_time = GETDATE();
 
-
-
-truncate table bronze.erp_cust_az12
-
-bulk insert bronze.erp_cust_az12
-from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.erp_cust_az12.csv'
-with 
-(
-
-firstrow = 2,
-fieldterminator = ',',
-tablock
-);
-
-
-truncate table bronze.erp_loc_a101
-
-bulk insert bronze.erp_loc_a101
-from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.erp_loc_a101.csv'
-with 
-(
-
-firstrow = 2,
-fieldterminator = ',',
-tablock
-);
+	print'duration for loading crm_prd_info is' + Cast(datediff(second,@start_time,@end_time) as varchar);
+	print '>>---------';
+	
 
 
 
-truncate table bronze.erp_px_cat_g1v2
+	print '---------------------------------------------------';
+	print 'loading crm_sales_details table';
+	print '---------------------------------------------------';
 
-bulk insert bronze.erp_px_cat_g1v2
-from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.erp_px_cat_g1v2.csv'
-with 
-(
+	set @start_time = GETDATE();
 
-firstrow = 2,
-fieldterminator = ',',
-tablock
-);
+		truncate table bronze.crm_sales_details
+
+		bulk insert bronze.crm_sales_details
+		from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.crm_sales_details.csv'
+		with 
+		(
+
+		firstrow = 2,
+		fieldterminator = ',',
+		tablock
+		);
+
+	set @end_time = GETDATE();
+
+	print'duration for loading crm_cust_info is' + Cast(datediff(second,@start_time,@end_time) as varchar);
+	print '>>---------';
+	
+
+	print '---------------------------------------------------';
+	print 'loading erp_cust_az12 table';
+	print '---------------------------------------------------';
+
+	set @start_time = GETDATE();
+
+		truncate table bronze.erp_cust_az12
+
+		bulk insert bronze.erp_cust_az12
+		from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.erp_cust_az12.csv'
+		with 
+		(
+
+		firstrow = 2,
+		fieldterminator = ',',
+		tablock
+		);
+
+
+	set @end_time = GETDATE();
+
+	print'duration for loading erp_cust_az12 is' + Cast(datediff(second,@start_time,@end_time) as varchar);
+	print '>>---------';
+
+	print '---------------------------------------------------';
+	print 'loading erp_loc_a101 table';
+	print '---------------------------------------------------';
+
+	set @start_time = GETDATE();
+
+		truncate table bronze.erp_loc_a101
+
+		bulk insert bronze.erp_loc_a101
+		from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.erp_loc_a101.csv'
+		with 
+		(
+
+		firstrow = 2,
+		fieldterminator = ',',
+		tablock
+		);
+
+
+	set @end_time = GETDATE();
+
+	print'duration for loading erp_loc_a101 is' + Cast(datediff(second,@start_time,@end_time) as varchar);
+	print '>>---------';
+
+	print '---------------------------------------------------';
+	print 'loading erp_px_cat_g1v2 table';
+	print '---------------------------------------------------';
+
+	set @start_time = GETDATE();
+
+	truncate table bronze.erp_px_cat_g1v2
+
+		bulk insert bronze.erp_px_cat_g1v2
+		from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.erp_px_cat_g1v2.csv'
+		with 
+		(
+
+		firstrow = 2,
+		fieldterminator = ',',
+		tablock
+		);
+
+	set @end_time = GETDATE();
+
+	print'duration for loading erp_px_cat_g1v2 is' + Cast(datediff(second,@start_time,@end_time) as varchar);
+	print '>>---------';
+
+	set @batch_end_time  = GETDATE();
+
+	print'duration for loading bronzelayer is' + Cast(datediff(second,@batch_start_time,@batch_end_time) as varchar);
+	print '>>--------';
+
+	end try 
+	begin catch
+
+	print '================================================';
+	print 'error occured during loading bronze layer';
+	print 'error message' + error_message();
+	print 'error message' + cast(error_number() as varchar);
+	print 'error message' + cast(error_state() as varchar);
+	print '================================================';
+
+end catch 
 
 end 
-
 
 exec bronze.load_bronze
