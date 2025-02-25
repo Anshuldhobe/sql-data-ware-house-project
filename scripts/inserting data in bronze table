@@ -7,6 +7,10 @@ first we are performing truncate command on each table to empty the table and th
 */
 
 
+Create or alter procedure bronze.load_bronze as
+
+begin
+
 truncate table bronze.crm_cust_info
 bulk insert bronze.crm_cust_info
 from 'C:\Users\lenovo\Downloads\sql-data-analytics-project-main\datasets\csv-files\bronze.crm_cust_info.csv'
@@ -91,5 +95,7 @@ fieldterminator = ',',
 tablock
 );
 
+end 
 
 
+exec bronze.load_bronze
